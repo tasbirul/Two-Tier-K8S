@@ -63,7 +63,7 @@ import { DatePipe } from '@angular/common';
         </div>
 
         <h1>Angular <span class="highlight">+</span> .NET</h1>
-        <p class="subtitle">Full-Stack Hello World</p>
+        <p class="subtitle">Full-Stack Hello World!</p>
 
         <!-- Message box -->
         <div class="message-box" [class.loaded]="connected()" [class.has-error]="!!error()">
@@ -705,7 +705,7 @@ export class App implements OnInit {
     return 'Unknown';
   });
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.fetchMessage();
