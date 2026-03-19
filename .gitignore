@@ -1,0 +1,32 @@
+# ---- .NET ----
+api/bin/
+api/obj/
+*.user
+*.suo
+*.cache
+*.log
+
+# ---- Angular / Node ----
+client/node_modules/
+client/dist/
+client/.angular/
+client/.vscode/
+
+# ---- IDE ----
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+
+# ---- Docker ----
+docker-compose.override.yml
+
+# ---- Environment ----
+.env
+.env.*
+!.env.example

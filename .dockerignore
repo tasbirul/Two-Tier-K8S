@@ -1,0 +1,30 @@
+# Dependencies
+client/node_modules/
+api/bin/
+api/obj/
+
+# Build output
+client/dist/
+client/.angular/
+
+# IDE & OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Docker
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# Docs
+README.md
+*.md
+!api/**/*.md
