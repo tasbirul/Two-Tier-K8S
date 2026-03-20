@@ -1,6 +1,4 @@
-# ============================================================
 # Stage 1: Build the Angular frontend
-# ============================================================
 FROM node:22-alpine AS client-build
 
 WORKDIR /app/client
@@ -14,9 +12,7 @@ COPY client/ ./
 RUN npx ng build --configuration=production
 
 
-# ============================================================
 # Stage 2: Restore .NET dependencies (separate layer for caching)
-# ============================================================
 FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine AS dotnet-restore
 
 WORKDIR /app/api
@@ -26,9 +22,7 @@ COPY api/api.csproj ./
 RUN dotnet restore
 
 
-# ============================================================
 # Stage 3: Build and publish the .NET API
-# ============================================================
 FROM dotnet-restore AS dotnet-build
 
 # Layer 2: Copy source and publish
@@ -36,9 +30,7 @@ COPY api/ ./
 RUN dotnet publish -c Release -o /app/publish --no-restore
 
 
-# ============================================================
 # Stage 4: Final minimal runtime image
-# ============================================================
 FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine AS final
 
 # Security: run as non-root user
