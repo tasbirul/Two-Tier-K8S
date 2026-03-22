@@ -62,7 +62,7 @@ import { DatePipe } from '@angular/common';
           </div>
         </div>
 
-        <h1>Angular <span class="highlight">+</span> .NET</h1>
+        <h1>Angular <span class="highlight">+</span> .NET <span class="highlight">+</span> Azure AKS</h1>
         <p class="subtitle">Full-Stack Hello World!</p>
 
         <!-- Message box -->

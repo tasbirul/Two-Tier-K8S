@@ -84,7 +84,7 @@ stages:
               kubernetesServiceConnection: '$(aksServiceConnection)'
               namespace: '$(kubernetesNamespace)'
               manifests: |
-                $(Pipeline.Workspace)/k8s-manifests/k8s.yml
+                $(Pipeline.Workspace)/k8s-manifests/**/*.yml
               containers: |
                 $(containerRegistry)/$(imageRepository):$(tag)
                 
