@@ -48,7 +48,8 @@ stages:
     - task: PublishPipelineArtifact@1
       displayName: 'Publish Kubernetes Manifests'
       inputs:
-        targetPath: '$(Build.SourcesDirectory)/k8s'
+        # ✅ FIXED: This now correctly points to your k8s-manifests folder
+        targetPath: '$(Build.SourcesDirectory)/k8s-manifests'
         artifact: 'k8s-manifests'
         publishLocation: 'pipeline'
 
