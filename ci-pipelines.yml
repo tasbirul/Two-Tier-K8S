@@ -44,6 +44,7 @@ stages:
         tags: |
           $(tag)
           latest
+        arguments: '--build-arg BUILDKIT_INLINE_CACHE=1 --cache-from=$(containerRegistry)/$(imageRepository):latest'  
     
     # Uploading the new Helm Chart folder
     - task: PublishPipelineArtifact@1
@@ -53,9 +54,9 @@ stages:
         artifact: 'helm-chart'
         publishLocation: 'pipeline'
 
-# ──────────────────────────────────────────────
+
 #  STAGE 2: CD (Deploy to AKS)
-# ──────────────────────────────────────────────
+
 - stage: Deploy
   displayName: Deploy to AKS
   dependsOn: Build
