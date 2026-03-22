@@ -9,6 +9,6 @@ public class HelloController : ControllerBase
     [HttpGet]
     public IActionResult Get()
     {
-        return Ok(new { message = "Hello from .NET!" });
+        return Ok(new { message = "Hello from Azure AKS!" });
     }
 }
