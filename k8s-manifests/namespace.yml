@@ -1,0 +1,9 @@
+#  Namespace — isolate application resources
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: angular-dotnet
+  labels:
+    app: angular-dotnet
+    managed-by: kubectl

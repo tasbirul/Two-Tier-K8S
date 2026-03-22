@@ -1,0 +1,18 @@
+#  Service — expose the application
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: angular-dotnet
+  namespace: angular-dotnet
+  labels:
+    app: angular-dotnet
+spec:
+  type: LoadBalancer
+  selector:
+    app: angular-dotnet
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+      protocol: TCP

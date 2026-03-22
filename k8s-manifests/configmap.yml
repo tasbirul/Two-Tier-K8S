@@ -1,0 +1,13 @@
+#  ConfigMap — application configuration
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: angular-dotnet-config
+  namespace: angular-dotnet
+  labels:
+    app: angular-dotnet
+data:
+  ASPNETCORE_ENVIRONMENT: "Production"
+  ASPNETCORE_URLS: "http://+:8080"
+  DOTNET_RUNNING_IN_CONTAINER: "true"
