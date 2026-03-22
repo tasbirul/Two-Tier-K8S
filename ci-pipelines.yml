@@ -1,5 +1,5 @@
-# Docker & AKS CI/CD Pipeline
-# Builds an image, pushes to ACR, and deploys to AKS with automatic rollback
+# Docker & AKS CI/CD Pipeline (Helm Edition)
+# Builds an image, pushes to ACR, and deploys to AKS using Helm
 
 trigger:
 - main
@@ -45,12 +45,12 @@ stages:
           $(tag)
           latest
     
+    # Uploading the new Helm Chart folder
     - task: PublishPipelineArtifact@1
-      displayName: 'Publish Kubernetes Manifests'
+      displayName: 'Publish Helm Chart'
       inputs:
-        # ✅ FIXED: This now correctly points to your k8s-manifests folder
-        targetPath: '$(Build.SourcesDirectory)/k8s-manifests'
-        artifact: 'k8s-manifests'
+        targetPath: '$(Build.SourcesDirectory)/angular-dotnet-chart' 
+        artifact: 'helm-chart'
         publishLocation: 'pipeline'
 
 # ──────────────────────────────────────────────
@@ -71,33 +71,36 @@ stages:
         deploy:
           steps:
           - task: DownloadPipelineArtifact@2
-            displayName: 'Download Kubernetes Manifests'
+            displayName: 'Download Helm Chart'
             inputs:
               buildType: 'current'
-              artifactName: 'k8s-manifests'
-              targetPath: '$(Pipeline.Workspace)/k8s-manifests'
+              artifactName: 'helm-chart'
+              targetPath: '$(Pipeline.Workspace)/helm-chart'
 
-          - task: KubernetesManifest@1
-            displayName: 'Deploy to Kubernetes cluster'
+          # Helm deployment task
+          - task: HelmDeploy@0
+            displayName: 'Deploy via Helm'
             inputs:
-              action: 'deploy'
-              connectionType: 'kubernetesServiceConnection'
+              connectionType: 'Kubernetes Service Connection'
               kubernetesServiceConnection: '$(aksServiceConnection)'
               namespace: '$(kubernetesNamespace)'
-              manifests: |
-                $(Pipeline.Workspace)/k8s-manifests/**/*.yml
-              containers: |
-                $(containerRegistry)/$(imageRepository):$(tag)
+              command: 'upgrade'
+              chartType: 'FilePath'
+              chartPath: '$(Pipeline.Workspace)/helm-chart'
+              releaseName: 'my-angular-app'
+              # This dynamically injects the new Build ID tag into your values.yaml
+              overrideValues: 'image.tag=$(tag)'
+              arguments: '--create-namespace'
                 
-        # Automatic Rollback if the deployment fails
+        # Automatic Helm Rollback if the deployment fails
         on:
           failure:
             steps:
-            - task: Kubernetes@1
-              displayName: 'Rollback Deployment on Failure'
+            - task: HelmDeploy@0
+              displayName: 'Rollback Helm Release on Failure'
               inputs:
                 connectionType: 'Kubernetes Service Connection'
-                kubernetesServiceEndpoint: '$(aksServiceConnection)'
+                kubernetesServiceConnection: '$(aksServiceConnection)'
                 namespace: '$(kubernetesNamespace)'
-                command: 'rollout'
-                arguments: 'undo deployment/angular-dotnet'
+                command: 'rollback'
+                arguments: 'my-angular-app 0' # '0' tells Helm to revert to the previous working revision
