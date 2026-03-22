@@ -56,8 +56,8 @@ spec:
         fsGroup: 1000
       containers:
         - name: angular-dotnet
-          # Note: The pipeline will automatically overwrite this tag with the Build ID!
-          image: tasbirul.azurecr.io/angular-dotnet:71
+          # The pipeline will automatically replace 'latest' with the actual Build ID
+          image: tasbirul.azurecr.io/angular-dotnet:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
