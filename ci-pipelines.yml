@@ -82,7 +82,7 @@ stages:
             displayName: 'Deploy via Helm'
             inputs:
               connectionType: 'Kubernetes Service Connection'
-              kubernetesServiceConnection: '$(aksServiceConnection)'
+              kubernetesServiceEndpoint: '$(aksServiceConnection)'
               namespace: '$(kubernetesNamespace)'
               command: 'upgrade'
               chartType: 'FilePath'
@@ -100,7 +100,7 @@ stages:
               displayName: 'Rollback Helm Release on Failure'
               inputs:
                 connectionType: 'Kubernetes Service Connection'
-                kubernetesServiceConnection: '$(aksServiceConnection)'
+                kubernetesServiceEndpoint: '$(aksServiceConnection)'
                 namespace: '$(kubernetesNamespace)'
                 command: 'rollback'
                 arguments: 'my-angular-app 0' # '0' tells Helm to revert to the previous working revision
