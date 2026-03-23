@@ -30,3 +30,7 @@ docker-compose.override.yml
 .env
 .env.*
 !.env.example
+
+#------ Script -----
+./install-monitoring.sh
+./kind-deploy.sh

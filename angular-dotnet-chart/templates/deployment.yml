@@ -30,8 +30,8 @@ spec:
       containers:
         - name: angular-dotnet
           # The pipeline will automatically replace 'latest' with the actual Build ID
-          image: tasbirul.azurecr.io/angular-dotnet:latest
-          imagePullPolicy: Always
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 8080
               protocol: TCP
