@@ -28,3 +28,6 @@ docker-compose*.yml
 README.md
 *.md
 !api/**/*.md
+
+# Scripts
+spin-up.sh

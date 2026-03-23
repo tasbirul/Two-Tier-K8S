@@ -23,9 +23,9 @@ variables:
   vmImageName: 'ubuntu-latest'
 
 stages:
-# ──────────────────────────────────────────────
+
 #  STAGE 1: CI (Build & Push)
-# ──────────────────────────────────────────────
+
 - stage: Build
   displayName: Build and Push
   jobs:
